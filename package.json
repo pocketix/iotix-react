@@ -6,7 +6,8 @@
     "build:demo": "npm run build --workspace demo",
     "start:demo": "npm run start --workspace demo",
     "install:all": "npm ci --maxsockets 1 --workspace packages/iotix-editor && npm ci --maxsockets 1 --workspace demo && npm ci --maxsockets 1",
-    "test:component": "npm run build:lib && npm run cypress:run --workspace demo"
+    "test:component": "npm run build:lib && npm run cypress:run --workspace demo",
+    "test:e2e": "npm run build:lib && npm run test:e2e --workspace demo"
   },
   "author": "Petr John",
   "contributors": [

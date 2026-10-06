@@ -13,4 +13,11 @@ export default defineConfig({
     viewportWidth: 1280,
     viewportHeight: 800,
   },
+  e2e: {
+    // Against the real running demo app (react-scripts start), not cy.mount -
+    // proves the visual/text editors round-trip correct JSON end-to-end.
+    baseUrl: "http://localhost:3000",
+    viewportWidth: 1280,
+    viewportHeight: 800,
+  },
 });

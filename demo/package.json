@@ -29,7 +29,9 @@
     "eject": "react-scripts eject",
     "eslint": "eslint --config .eslintrc.custom.json --fix .",
     "cypress:open": "cypress open --component",
-    "cypress:run": "cypress run --component --browser chrome"
+    "cypress:run": "cypress run --component --browser chrome",
+    "cypress:run:e2e": "cypress run --e2e --browser chrome",
+    "test:e2e": "start-server-and-test \"BROWSER=none npm start\" http://localhost:3000 cypress:run:e2e"
   },
   "eslintConfig": {
     "extends": [
@@ -56,6 +58,7 @@
     "@vitejs/plugin-react": "^6.1.1",
     "cypress": "^16.0.0",
     "eslint-config-react-app": "^7.0.1",
+    "start-server-and-test": "^2.1.5",
     "vite": "^8.2.2"
   }
 }
