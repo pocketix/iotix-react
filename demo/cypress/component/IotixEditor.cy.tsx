@@ -10,6 +10,7 @@ import siblings from "../../../iotix-shared-tests/fixtures/programs/siblings.jso
 import duplicateParams from "../../../iotix-shared-tests/fixtures/programs/duplicateParams.json";
 import structureParams from "../../../iotix-shared-tests/fixtures/programs/structureParams.json";
 import empty from "../../../iotix-shared-tests/fixtures/programs/empty.json";
+import write from "../../../iotix-shared-tests/fixtures/programs/write.json";
 
 // Shared, framework-agnostic assertions — see iotix-shared-tests/README.md
 import * as selectorsModule from "../../../iotix-shared-tests/scenarios/selectors";
@@ -617,5 +618,34 @@ describe("IotixEditor mobile-responsive defaults (shared cross-repo scenario)", 
     );
 
     scenarios.showsVisualPaneHidesTextPaneByDefault();
+  });
+});
+
+// A write is declared in the language as an ordinary "cmd" statement with
+// "structure" params [reference, value] - no write-specific editor code
+// exists, so these prove the existing structure-param path is enough.
+describe("Write statement (shared cross-repo scenario)", () => {
+  it("renders a write with its bound reference and value", () => {
+    mountEditor(write as unknown as Program);
+    scenarios.rendersWriteStatement(sel, { title: "Write", reference: "1.temperature", value: "21" });
+  });
+
+  it("emits an updated program after editing the written value", () => {
+    const onProgramChange = cy.stub().as("onProgramChange");
+
+    cy.mount(
+      <IotixEditor
+        language={language as unknown as Language}
+        program={write as unknown as Program}
+        level={0}
+        onProgramChange={onProgramChange}
+        settings={{ visualEditor: { enabled: true }, common: { manualSync: false } } as EditorSettings}
+      />
+    );
+
+    scenarios.editsStructureParamAndEmitsProgramChange(sel, {
+      value: "25",
+      commit: () => cy.get(sel.expressionInput).eq(1).blur(),
+    });
   });
 });
